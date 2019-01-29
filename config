@@ -1,0 +1,2 @@
+notroot=<non-root user for running tests>
+kernel-config=<path of kernel .config file>

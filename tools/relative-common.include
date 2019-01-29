@@ -1,0 +1,12 @@
+#! /bin/sh
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright (C) Intel Corporation, 2018
+# Copyright (C) Casey Schaufler <casey@schaufler-ca.com> 2018
+#
+
+export BASE=".."
+export TOOLS="$BASE/tools"
+export TESTS="$BASE/tests"
+export TARGETS="$BASE/targets"
+export RULESTORE="$BASE/targets/rule-store"
+

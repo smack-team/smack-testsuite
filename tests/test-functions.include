@@ -1,0 +1,100 @@
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright (C) Intel Corporation, 2018
+# Copyright (C) Casey Schaufler <casey@schaufler-ca.com> 2018
+#
+
+#
+# Basic reporting functions
+#
+# PASS		- integer count of passed cases
+# FAIL		- integer count of failed cases
+# VERBOSE	- to print or be quiet
+#
+# testcase result line
+#
+function testcase() {
+	if [ $1 = 0 ] ; then
+		PASS=`expr $PASS + 1`
+		if [ $VERBOSE = 1 ] ; then echo "$0:$2 PASS" ; fi
+	else
+		FAIL=`expr $FAIL + 1`
+		if [ $VERBOSE = 1 ] ; then echo "$0:$2 FAIL" ; fi
+	fi
+}
+
+#
+# The test case is a "fail" case, where we expect a failure.
+#
+# PASS		- integer count of passed cases
+# FAIL		- integer count of failed cases
+# VERBOSE	- to print or be quiet
+#
+# failcase result line
+#
+function failcase() {
+	if [ $1 != 0 ] ; then
+		PASS=`expr $PASS + 1`
+		if [ $VERBOSE = 1 ] ; then echo "$0:$2 PASS" ; fi
+	else
+		FAIL=`expr $FAIL + 1`
+		if [ $VERBOSE = 1 ] ; then echo "$0:$2 FAIL" ; fi
+	fi
+}
+
+#
+# clientbind server-smack client-smack line pass/fail
+#
+# NAPTIME	- time to sleep between actions
+# TESTPORT	- port to use
+# TESTHOST	- IPv4 address of the server
+# NOTROOT	- non-root user
+# VERBOSE	- to print or be quiet
+#
+function ipv4tcpcase() {
+	sleep $NAPTIME
+	if [ $VERBOSE = 1 ] ; then
+		echo $1 | $TOOLS/run-smack-user.sh $1 $NOTROOT \
+			socat - TCP4-LISTEN:$TESTPORT,reuseaddr &
+	else
+		echo $1 | $TOOLS/run-smack-user.sh $1 $NOTROOT \
+			socat - TCP4-LISTEN:$TESTPORT,reuseaddr >& /dev/null &
+	fi
+
+	sleep $NAPTIME
+	if [ $VERBOSE = 1 ] ; then
+		echo $2 | $TOOLS/run-smack-user.sh $2 $NOTROOT \
+			socat - TCP4:$TESTHOST:$TESTPORT
+	else
+		echo $2 | $TOOLS/run-smack-user.sh $2 $NOTROOT \
+			socat - TCP4:$TESTHOST:$TESTPORT >& /dev/null
+	fi
+	RC=$?
+
+	#
+	# Recovery - make sure that the listener goes away.
+	#
+	if [ $RC != 0 ] ; then
+		sleep $NAPTIME
+		if [ $VERBOSE = 1 ] ; then
+			echo Recovery | $TOOLS/run-smack-user.sh $1 $NOTROOT \
+				socat - TCP4:$TESTHOST:$TESTPORT
+		else
+			echo Recovery | $TOOLS/run-smack-user.sh $1 $NOTROOT \
+				socat - TCP4:$TESTHOST:$TESTPORT >& /dev/null
+		fi
+		if [ $? != 0 ] ; then
+			echo $0 was unable to clean up port $TESTPORT.
+		fi
+	fi
+
+	if [ "X$4" = "Xfail" ] ; then
+		failcase $RC $3
+	else
+		testcase $RC $3
+	fi
+
+	#
+	# Because port bindings persist
+	#
+	TESTPORT=`expr $TESTPORT + 1`
+}

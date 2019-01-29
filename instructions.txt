@@ -1,0 +1,44 @@
+
+"Good for you, you've decided to clean the elevator"
+
+	- The onboard computer on Dark Star.
+
+Setting up the Smack test suite:
+
+Verify you have a Smack enabled kernel:
+
+	$ cat /sys/kernel/security/lsm ; echo
+	capability,yama,smack
+
+If "smack" does not appear in the output, you do not have
+a Smack enabled kernel. You can determine if Smack is built
+in your kernel by looking for "CONFIG_SECURITY_SMACK=y" in
+the kernel config file. You should find this in /boot. If
+you do not have Smack built in, you will have to build a
+new kernel. If Smack is built in, but not enabled, you can
+add "security=smack" to the kernel boot line.
+
+You will need socat and ifconfig to support this suite:
+
+	$ sudo dnf install socat net-tools
+
+Get the Smack user space package and install it. You will need
+the build tools autoconf and libtoolize. 
+
+	$ pushd ..
+	$ sudo dnf install autogen libtool
+	$ git clone https://github.com/smack-team/smack.git
+	$ cd smack
+	$ ./autogen.sh
+	$ make
+	$ sudo make install
+	$ popd
+
+Building the test tools:
+
+	$ make -C tools
+
+Running the Smack test suite:
+
+	$ sudo make test-results
+

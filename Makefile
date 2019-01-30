@@ -52,8 +52,8 @@ CASES-SMACK-API=	template proc-attr-current smackfs-access
 CASES-FILESYSTEM=	file-access-positive file-access-negative file-locking \
 			program-smack-exec dir-transmute mount
 CASES-UDS=		uds-access
-CASES-IPV4-LOCALHOST=	ipv4-tcp-localhost
-CASES-IPV4-NET-LOCAL=	ipv4-tcp-net-local
+CASES-IPV4-LOCALHOST=	ipv4-tcp-localhost ipv4-udp-local-peersec
+CASES-IPV4-NET-LOCAL=	ipv4-tcp-net-local ipv4-udp-net-local-peersec
 CASES-IPV6-LOCALHOST=	ipv6-ipv4-udp-mapped
 
 CASES=	${CASES-SMACK-API} ${CASES-FILESYSTEM} ${CASES-UDS} \
@@ -94,6 +94,10 @@ smackfs-access: tools/smackfs-access
 	-${TESTS}/smackfs-access.sh >> result
 uds-access: clean-targets
 	-${TESTS}/uds-access.sh 2> /dev/null >> result
+ipv4-udp-local-peersec: clean-targets
+	-${TESTS}/ipv4-udp-local-peersec.sh 2> /dev/null >> result
+ipv4-udp-net-local-peersec: clean-targets
+	-${TESTS}/ipv4-udp-net-local-peersec.sh 2> /dev/null >> result
 ipv4-tcp-localhost:
 	-${TESTS}/ipv4-tcp-localhost.sh >> result
 ipv4-tcp-net-local: net-local-ipv4

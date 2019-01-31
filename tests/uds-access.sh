@@ -50,9 +50,12 @@ function clientbind {
 		testcase $RC $3
 	fi
 
-	sleep $NAPTIME
-	kill $SOCAT
-	rm -f $TESTSOCK
+	# Clean up any socats that are lingering.
+	if [ -S $TESTSOCK ]
+	then
+		fuser --kill -s $TESTSOCK
+		rm -f $TESTSOCK
+	fi
 }
 
 mkdir $TARGETS/uds-notroot

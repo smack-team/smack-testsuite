@@ -51,6 +51,7 @@ function failcase() {
 # VERBOSE	- to print or be quiet
 #
 function ipv4tcpcase() {
+	SENDOPTS="TCP4:$TESTHOST:$TESTPORT,connect-timeout=5"
 	sleep $NAPTIME
 	if [ $VERBOSE = 1 ] ; then
 		echo $1 | $TOOLS/run-smack-user.sh $1 $NOTROOT \
@@ -63,10 +64,10 @@ function ipv4tcpcase() {
 	sleep $NAPTIME
 	if [ $VERBOSE = 1 ] ; then
 		echo $2 | $TOOLS/run-smack-user.sh $2 $NOTROOT \
-			socat - TCP4:$TESTHOST:$TESTPORT
+			socat - $SENDOPTS
 	else
 		echo $2 | $TOOLS/run-smack-user.sh $2 $NOTROOT \
-			socat - TCP4:$TESTHOST:$TESTPORT >& /dev/null
+			socat - $SENDOPTS >& /dev/null
 	fi
 	RC=$?
 
@@ -77,10 +78,10 @@ function ipv4tcpcase() {
 		sleep $NAPTIME
 		if [ $VERBOSE = 1 ] ; then
 			echo Recovery | $TOOLS/run-smack-user.sh $1 $NOTROOT \
-				socat - TCP4:$TESTHOST:$TESTPORT
+				socat - $SENDOPTS
 		else
 			echo Recovery | $TOOLS/run-smack-user.sh $1 $NOTROOT \
-				socat - TCP4:$TESTHOST:$TESTPORT >& /dev/null
+				socat - $SENDOPTS >& /dev/null
 		fi
 		if [ $? != 0 ] ; then
 			echo $0 was unable to clean up port $TESTPORT.

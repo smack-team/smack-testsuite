@@ -23,6 +23,10 @@ if ! $TOOLS/is-root.sh ; then
 	exit 1
 fi
 
+if [ ! -d $TARGETS ] ; then
+	mkdir -m 775 -p $TARGETS
+fi
+
 cd $TARGETS
 if [ $? != 0 ] ; then
 	if [ $VERBOSE = 1 ] ; then echo "Cannot find $TARGETS" ; fi

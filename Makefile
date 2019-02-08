@@ -55,7 +55,7 @@ CASES-UDS=		uds-access
 CASES-IPV4-LOCALHOST=	ipv4-tcp-localhost ipv4-udp-local-peersec \
 			ipv4-tcp-localhost-access
 CASES-IPV4-NET-LOCAL=	ipv4-tcp-net-local ipv4-udp-net-local-peersec \
-			ipv4-tcp-net-local-access
+			ipv4-tcp-net-local-access ipv4-tcp-local-peersec
 CASES-IPV6-LOCALHOST=	ipv6-ipv4-udp-mapped
 
 CASES=	${CASES-SMACK-API} ${CASES-FILESYSTEM} ${CASES-UDS} \
@@ -106,6 +106,8 @@ ipv4-tcp-localhost-access:
 	-${TESTS}/ipv4-tcp-localhost-access.sh >> result
 ipv4-tcp-net-local-access: net-local-ipv4
 	-${TESTS}/ipv4-tcp-net-local-access.sh >> result
+ipv4-tcp-local-peersec: net-local-ipv4
+	-${TESTS}/ipv4-tcp-local-peersec.sh >> result
 ipv4-tcp-net-local: net-local-ipv4
 	-${TESTS}/ipv4-tcp-net-local.sh >> result
 ipv6-ipv4-udp-mapped:

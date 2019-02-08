@@ -28,5 +28,6 @@ if cat $LSMFILE | sed -e 's/\(.*\)/,\1,/' | grep -qi ','$1',' ; then
 	echo $1
 else
 	echo '-'
+	exit 1
 fi
 exit 0

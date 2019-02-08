@@ -4,8 +4,7 @@
 #
 PROGRAMS=	smack-proc-attr smackfs-access file-lock \
 		smack-ipv4-udp-peersec \
-		smack-ipv4-tcp-peersec \
-		smack-ipv6-tcp-peersec
+		smack-ipv4-tcp-peersec
 
 default: ${PROGRAMS}
 
@@ -26,6 +25,3 @@ smack-ipv4-udp-peersec: smack-ipv4-udp-peersec.c
 
 smack-ipv4-tcp-peersec: smack-ipv4-tcp-peersec.c
 	cc -o smack-ipv4-tcp-peersec smack-ipv4-tcp-peersec.c
-
-smack-ipv6-tcp-peersec: smack-ipv6-tcp-peersec.c
-	cc -o smack-ipv6-tcp-peersec smack-ipv6-tcp-peersec.c

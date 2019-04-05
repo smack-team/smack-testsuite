@@ -19,6 +19,11 @@ while [ $# != 0 ] ; do
 	shift
 done
 
+if [ ! -f $CONFIG ] ; then
+	echo The specified config file \"$CONFIG\" is not a file.
+	exit 1
+fi
+
 USERNAME=`grep notroot= $CONFIG | sed -e 's/notroot=//'`
 if [ "X$USERNAME" = "X" ] ; then
 	if [ $VERBOSE = 1 ] ; then echo "No notroot= line in $CONFIG." ; fi

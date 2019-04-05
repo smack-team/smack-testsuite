@@ -28,6 +28,11 @@ while [ $# != 0 ] ; do
 	shift
 done
 
+if [ ! -f $CONFIG ] ; then
+	echo The specified config file \"$CONFIG\" is not a file.
+	exit 1
+fi
+
 KERNELPATH=`grep kernel-config= $CONFIG | sed -e 's/kernel-config=//'`
 if [ "X$KERNELPATH" = "X" ] ; then
 	if [ $VERBOSE = 1 ] ; then

@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 # SPDX-License-Identifier: BSD-3-Clause
 # Copyright (C) Intel Corporation, 2018
 # Copyright (C) Casey Schaufler <casey@schaufler-ca.com> 2018

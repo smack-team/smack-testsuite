@@ -83,13 +83,28 @@ $TOOLS/set-smack-rule.sh Crackle Snap w
 ipv6udpcase Snap Crackle $TESTPORT "[::1]" $LINENO PASS
 ipv6udpcase Snap Crackle $TESTPORT "[::ffff:127.0.0.1]" $LINENO PASS
 
+$TOOLS/set-smack-rule.sh Snap Crackle -
+$TOOLS/set-smack-rule.sh Crackle Snap -
+
 $TOOLS/set-smack-rule.sh Eggs Bacon -
 $TOOLS/set-smack-rule.sh Bacon Eggs w
 
 ipv6udpcase Eggs Bacon $TESTPORT "[::1]" $LINENO FAIL
 ipv6udpcase Eggs Bacon $TESTPORT "[::ffff:127.0.0.1]" $LINENO FAIL
 
+$TOOLS/set-smack-rule.sh Eggs Bacon -
+$TOOLS/set-smack-rule.sh Bacon Eggs -
+
+ipv6udpcase Eggs Bacon $TESTPORT "[::1]" $LINENO FAIL
+ipv6udpcase Eggs Bacon $TESTPORT "[::ffff:127.0.0.1]" $LINENO FAIL
+
 $TOOLS/set-smack-rule.sh Oatmeal Granola w
+$TOOLS/set-smack-rule.sh Granola Oatmeal -
+
+ipv6udpcase Oatmeal Granola $TESTPORT "[::1]" $LINENO FAIL
+ipv6udpcase Oatmeal Granola $TESTPORT "[::ffff:127.0.0.1]" $LINENO FAIL
+
+$TOOLS/set-smack-rule.sh Oatmeal Granola -
 $TOOLS/set-smack-rule.sh Granola Oatmeal -
 
 ipv6udpcase Oatmeal Granola $TESTPORT "[::1]" $LINENO FAIL

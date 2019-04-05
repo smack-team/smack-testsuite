@@ -50,7 +50,7 @@ if [ $? != 0 ] ; then
 	exit 1
 fi
 
-rm $RULESTORE
+rm -f $RULESTORE
 if [ $? != 0 ] ; then
 	if [ $VERBOSE = 1 ] ; then echo "Cannot remove $RULESTORE." ; fi
 fi

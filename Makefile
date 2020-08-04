@@ -41,6 +41,8 @@ not-root:
 	${TOOLS}/not-root.sh >& /dev/null
 net-local-ipv4:
 	${TOOLS}/net-local-ipv4.sh >& /dev/null
+net-local-ipv6:
+	${TOOLS}/net-local-ipv6.sh >& /dev/null
 basic-setup:
 	${TOOLS}/basic-setup.sh
 initialize-result:
@@ -56,7 +58,8 @@ CASES-IPV4-LOCALHOST=	ipv4-tcp-localhost ipv4-udp-local-peersec \
 			ipv4-tcp-localhost-access
 CASES-IPV4-NET-LOCAL=	ipv4-tcp-net-local ipv4-udp-net-local-peersec \
 			ipv4-tcp-net-local-access ipv4-tcp-local-peersec
-CASES-IPV6-LOCALHOST=	ipv6-ipv4-udp-mapped
+CASES-IPV6-LOCALHOST=	ipv6-ipv4-udp-mapped ipv6-tcp-localhost \
+			ipv6-tcp-localhost-access
 
 CASES=	${CASES-SMACK-API} ${CASES-FILESYSTEM} ${CASES-UDS} \
 	${CASES-IPV4-LOCALHOST} ${CASES-IPV4-NET-LOCAL} \
@@ -112,3 +115,7 @@ ipv4-tcp-net-local: net-local-ipv4
 	-${TESTS}/ipv4-tcp-net-local.sh >> result
 ipv6-ipv4-udp-mapped:
 	-${TESTS}/ipv6-ipv4-udp-mapped.sh 2> /dev/null >> result
+ipv6-tcp-localhost: net-local-ipv6
+	-${TESTS}/ipv6-tcp-localhost.sh >> result
+ipv6-tcp-localhost-access: net-local-ipv6
+	-${TESTS}/ipv6-tcp-localhost-access.sh >> result

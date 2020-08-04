@@ -99,3 +99,62 @@ function ipv4tcpcase() {
 	#
 	TESTPORT=`expr $TESTPORT + 1`
 }
+
+#
+# clientbind server-smack client-smack line pass/fail
+#
+# NAPTIME	- time to sleep between actions
+# TESTPORT	- port to use
+# TESTHOST	- IPv6 address of the server
+# NOTROOT	- non-root user
+# VERBOSE	- to print or be quiet
+#
+function ipv6tcpcase() {
+	SENDOPTS="TCP4:$TESTHOST:$TESTPORT,connect-timeout=5"
+	sleep $NAPTIME
+	if [ $VERBOSE = 1 ] ; then
+		echo $1 | $TOOLS/run-smack-user.sh $1 $NOTROOT \
+			socat - TCP6-LISTEN:$TESTPORT,reuseaddr &
+	else
+		echo $1 | $TOOLS/run-smack-user.sh $1 $NOTROOT \
+			socat - TCP6-LISTEN:$TESTPORT,reuseaddr >& /dev/null &
+	fi
+
+	sleep $NAPTIME
+	if [ $VERBOSE = 1 ] ; then
+		echo $2 | $TOOLS/run-smack-user.sh $2 $NOTROOT \
+			socat - $SENDOPTS
+	else
+		echo $2 | $TOOLS/run-smack-user.sh $2 $NOTROOT \
+			socat - $SENDOPTS >& /dev/null
+	fi
+	RC=$?
+
+	#
+	# Recovery - make sure that the listener goes away.
+	#
+	if [ $RC != 0 ] ; then
+		sleep $NAPTIME
+		if [ $VERBOSE = 1 ] ; then
+			echo Recovery | $TOOLS/run-smack-user.sh $1 $NOTROOT \
+				socat - $SENDOPTS
+		else
+			echo Recovery | $TOOLS/run-smack-user.sh $1 $NOTROOT \
+				socat - $SENDOPTS >& /dev/null
+		fi
+		if [ $? != 0 ] ; then
+			echo $0 was unable to clean up port $TESTPORT.
+		fi
+	fi
+
+	if [ "X$4" = "Xfail" ] ; then
+		failcase $RC $3
+	else
+		testcase $RC $3
+	fi
+
+	#
+	# Because port bindings persist
+	#
+	TESTPORT=`expr $TESTPORT + 1`
+}

@@ -1,5 +1,5 @@
 /*
- * SPDX-License-Identifier: BSD-3-Clause
+ * SPDX-License-Identifier: GPL-2.0-or-later
  * Copyright (C) Intel Corporation, 2018
  * Copyright (C) Casey Schaufler <casey@schaufler-ca.com> 2018
  *

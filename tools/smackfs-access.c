@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+/* SPDX-License-Identifier: GPL-2.0-or-later */
 /*
  * testaccess - See if /smack/access and /smack/access2 work
  *

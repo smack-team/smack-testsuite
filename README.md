@@ -1,8 +1,8 @@
 Basic Smack Regression Test Suite for the Linux Kernel
 ======================================================
-https://github.com/smack-team/smack-suite
+https://github.com/smack-team/smack-testsuite
 
-The smack-suite project provides a self-contained regression test
+The smack-testsuite project provides a self-contained regression test
 suite for the Smack Linux Security Module (LSM).
 
 ## Inline Resources
@@ -10,11 +10,11 @@ suite for the Smack Linux Security Module (LSM).
 The test suite's source repository is part of the smack-team project
 and is located on Github at:
 
-* https://github.com/smack-team/smack-suite
+* https://github.com/smack-team/smack-testsuite
 
 ## Installation
 
-The smack-suite requires the Smack userspace, which must be built locally.
+The smack-testsuite requires the Smack userspace, which must be built locally.
 
 	$ git clone https://github.com/smack-team/smack.git
 	$ cd smack

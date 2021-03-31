@@ -110,7 +110,7 @@ function ipv4tcpcase() {
 # VERBOSE	- to print or be quiet
 #
 function ipv6tcpcase() {
-	SENDOPTS="TCP4:$TESTHOST:$TESTPORT,connect-timeout=5"
+	SENDOPTS="TCP6:$TESTHOST:$TESTPORT,connect-timeout=5"
 	sleep $NAPTIME
 	if [ $VERBOSE = 1 ] ; then
 		echo $1 | $TOOLS/run-smack-user.sh $1 $NOTROOT \

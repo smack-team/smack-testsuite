@@ -57,7 +57,7 @@ main(int argc, char *argv[])
 	}
 
 	alarm(5);
-	if (listen(firstsock, 0) < 0) {
+	if (listen(firstsock, 64) < 0) {
 		printf("%s-listen\n", argv[0]);
 		exit(1);
 	}

@@ -66,18 +66,27 @@ FAIL=0
 clientbind Pop Pop $LINENO pass
 
 $TOOLS/set-smack-rule.sh Peach Cream w
+$TOOLS/set-smack-rule.sh Cream Peach -
+
+clientbind Cream Peach $LINENO fail
+
+$TOOLS/set-smack-rule.sh Peach Cream w
+$TOOLS/set-smack-rule.sh Cream Peach w
 
 clientbind Cream Peach $LINENO pass
 
 $TOOLS/set-smack-rule.sh Peach Cream a
+$TOOLS/set-smack-rule.sh Cream Peach a
 
 clientbind Cream Peach $LINENO fail
 
 $TOOLS/set-smack-rule.sh Peach Cream r
+$TOOLS/set-smack-rule.sh Cream Peach r
 
 clientbind Cream Peach $LINENO fail
 
 $TOOLS/set-smack-rule.sh Peach Cream -
+$TOOLS/set-smack-rule.sh Cream Peach -
 
 clientbind Cream Peach $LINENO fail
 

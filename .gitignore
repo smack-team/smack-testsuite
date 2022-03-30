@@ -1,0 +1,9 @@
+#
+# User may create these
+#
+config
+result
+#
+# test data directory
+#
+targets/

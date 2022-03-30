@@ -60,14 +60,14 @@ CASES-IPV4-NET-LOCAL=	ipv4-tcp-net-local ipv4-udp-net-local-peersec \
 			ipv4-tcp-net-local-access ipv4-tcp-local-peersec
 CASES-IPV6-LOCALHOST=	ipv6-ipv4-udp-mapped ipv6-tcp-localhost \
 			ipv6-tcp-localhost-access
+CASES-AUDIT=		audit-avc
 
 CASES=	${CASES-SMACK-API} ${CASES-FILESYSTEM} ${CASES-UDS} \
 	${CASES-IPV4-LOCALHOST} ${CASES-IPV4-NET-LOCAL} \
-	${CASES-IPV6-LOCALHOST}
+	${CASES-IPV6-LOCALHOST} ${CASES-AUDIT}
 
 CASES-LOCAL=	${CASES-SMACK-API} ${CASES-FILESYSTEM} ${CASES-UDS} \
-		${CASES-IPV4-LOCALHOST} \
-		${CASES-IPV6-LOCALHOST}
+		${CASES-IPV4-LOCALHOST} ${CASES-IPV6-LOCALHOST} ${CASES-AUDIT}
 
 test-results:	is-root ready setup clean-targets initialize-result ${CASES}
 	${TOOLS}/final-report.sh
@@ -119,3 +119,5 @@ ipv6-tcp-localhost: net-local-ipv6
 	-${TESTS}/ipv6-tcp-localhost.sh >> result
 ipv6-tcp-localhost-access: net-local-ipv6
 	-${TESTS}/ipv6-tcp-localhost-access.sh >> result
+audit-avc:
+	-${TESTS}/audit-avc.sh >> result
